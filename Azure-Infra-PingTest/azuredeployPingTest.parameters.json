@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appInsightsName": {
+      "value": "AIS-ORG-D01-MyApp-WEB"
+    },
+    "appSvcName": {
+      "value": "AS-ORG-D01-MyApp-WEB"
+    },
+    "pingURL": {
+      "value": "https://as-org-d01-myapp-web.azurewebsites.net"
+    },
+    "pingStatusCode": {
+      "value": "200"
+    },
+    "pingText": {
+      "value": ""
+    },
+    "notifyEmailAddresses": {
+      "value": "someone@gmail.com"
+    }
+  }
+}

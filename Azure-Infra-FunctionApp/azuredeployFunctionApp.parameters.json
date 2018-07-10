@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "functionAppName": {
+      "value": "FA-ORG-D01-MyFuncApp-WEB"
+    },
+    "hostingPlanName": {
+      "value": "ASP-ORG-D01-MyFuncApp-Dynamic"
+    },
+    "storageAccountName": {
+      "value": "saorgd01myapp"
+    },
+    "appInsightsName": {
+      "value": "AIS-ORG-D01-MyFuncApp-WEB"
+    },
+    "location": {
+      "value": "northcentralus"
+    }
+  }
+}

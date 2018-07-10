@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "value": "kv-org-d01-myapp"
+        },
+        "webAppName": {
+            "value": "AS-ORG-D01-MyApp-WEB"
+        },
+        "objectId": {
+            "value": "x-x-x-x-x"
+        },
+        "location": {
+            "value": "northcentralus"
+        }
+    }
+}

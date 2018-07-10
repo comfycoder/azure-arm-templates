@@ -1,0 +1,125 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Key Vault"
+            }
+        },
+        "webAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the associated Web Application or Function App."
+            }
+        },
+        "objectId": {
+            "type": "string",
+            "metadata": {
+                "description": "Object Id of an AD user. Get using Get-AzureRmADUser or Get-AzureRmADServicePrincipal cmdlets"
+            }
+        },
+        "secretsPermissions": {
+            "type": "array",
+            "defaultValue": [
+                "all"
+            ],
+            "metadata": {
+                "description": "Permissions to secrets in the Key Vault to grant the AD user. Valid values are: all, get, set, list, and delete."
+            }
+        },
+        "skuName": {
+            "type": "string",
+            "defaultValue": "Premium",
+            "allowedValues": [
+                "Standard",
+                "Premium"
+            ],
+            "metadata": {
+                "description": "SKU for the vault"
+            }
+        },
+        "enableVaultForDeployment": {
+            "type": "bool",
+            "defaultValue": false,
+            "allowedValues": [
+                true,
+                false
+            ],
+            "metadata": {
+                "description": "Specifies if the vault is enabled for a VM deployment"
+            }
+        },
+        "enableVaultForDiskEncryption": {
+            "type": "bool",
+            "defaultValue": false,
+            "allowedValues": [
+                true,
+                false
+            ],
+            "metadata": {
+                "description": "Specifies if the azure platform has access to the vault for enabling disk encryption scenarios."
+            }
+        },
+        "enabledForTemplateDeployment": {
+            "type": "bool",
+            "defaultValue": true,
+            "allowedValues": [
+                true,
+                false
+            ],
+            "metadata": {
+                "description": "Specifies whether Azure Resource Manager is permitted to retrieve secrets from the key vault."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "tenantId": "[subscription().tenantId]",
+        "identityResourceId": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppName')),'/providers/Microsoft.ManagedIdentity/Identities/default')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[parameters('keyVaultName')]",
+            "apiVersion": "2016-10-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "enabledForDeployment": "[parameters('enableVaultForDeployment')]",
+                "enabledForDiskEncryption": "[parameters('enableVaultForDiskEncryption')]",
+                "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
+                "tenantId": "[variables('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[variables('tenantId')]",
+                        "objectId": "[parameters('objectId')]",
+                        "permissions": {
+                            "secrets": "[parameters('secretsPermissions')]"
+                        }
+                    },
+                    {
+                        "tenantId": "[reference(variables('identityResourceId'), '2015-08-31-PREVIEW').tenantId]",
+                        "objectId": "[reference(variables('identityResourceId'), '2015-08-31-PREVIEW').principalId]",
+                        "permissions": {
+                            "secrets": [
+                                "get",
+                                "list" 
+                            ]
+                        }
+                    }
+                ],
+                "sku": {
+                    "name": "[parameters('skuName')]",
+                    "family": "A"
+                }
+            }
+        }
+    ]
+}

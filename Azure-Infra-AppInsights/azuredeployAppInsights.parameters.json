@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appInsightsName": {
+      "value": "AIS-ORG-D01-MyApp-WEB"
+    },
+    "webAppName": {
+      "value": "AS-ORG-D01-MyApp-WEB"
+    },
+    "webAppResourceGroup": {
+      "value": "RG-ORG-D01-MyApp"
+    }
+  }
+}

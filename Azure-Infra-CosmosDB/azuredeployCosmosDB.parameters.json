@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "cosmosdbAccountName": {
-      "value": "COS-ORG-D01-MyApp"
+      "value": "cos-org-d01-myapp"
     },
     "cosmosdbName": {
       "value": "imagesdb"

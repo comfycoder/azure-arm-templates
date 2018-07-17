@@ -18,29 +18,28 @@
                 "Premium_LRS"
             ],
             "metadata": {
-                "description": "Storage Account type"
+                "description": "Storage Account type."
             }
         },
         "location": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
+            "defaultValue": "northcentralus",
             "metadata": {
                 "description": "Location for all resources."
             }
         }
     },
     "variables": {
-        
+        "location": "[if(empty(parameters('location')), resourceGroup().location, parameters('location'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('storageAccountName')]",
             "apiVersion": "2018-02-01",
-            "location": "[parameters('location')]",
+            "name": "[parameters('storageAccountName')]",
+            "location": "[variables('location')]",
+            "type": "Microsoft.Storage/storageAccounts",
             "sku": {
-                "name": "[parameters('storageAccountType')]",
-                "tier": "standard"
+                "name": "[parameters('storageAccountType')]"
             },
             "kind": "StorageV2",
             "properties": {
@@ -51,21 +50,26 @@
                     "defaultAction": "Allow"
                 },
                 "supportsHttpsTrafficOnly": true,
+                "accessTier": "Hot",
                 "encryption": {
                     "services": {
-                        "file": {
+                        "blob": {
                             "enabled": true
                         },
-                        "blob": {
+                        "file": {
                             "enabled": true
                         }
                     },
                     "keySource": "Microsoft.Storage"
-                },
-                "accessTier": "Hot"
-            }
+                }
+            },
+            "dependsOn": []
         }
     ],
     "outputs": {
+        "storageAccountName": {
+            "type": "string",
+            "value": "[parameters('storageAccountName')]"
+        }
     }
 }

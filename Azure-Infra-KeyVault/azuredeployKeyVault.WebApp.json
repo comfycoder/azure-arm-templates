@@ -5,7 +5,14 @@
         "keyVaultName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the Vault"
+                "description": "Name of the Key Vault."
+            }
+        },
+        "webAppMSI": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the associated Web App or Function App resource MSI."
             }
         },
         "adObjectId": {
@@ -125,7 +132,8 @@
         }
     },
     "variables": {
-        "tenantId": "[subscription().tenantId]"
+        "tenantId": "[subscription().tenantId]",
+        "webAppResourceId": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppMSI')),'/providers/Microsoft.ManagedIdentity/Identities/default')]"
     },
     "resources": [
         {
@@ -150,6 +158,16 @@
                             "certificates": "[parameters('certificatesPermissions')]",
                             "storage": "[parameters('storagePermissions')]"
                         }
+                    },
+                    {
+                       "tenantId": "[reference(variables('webAppResourceId'), '2015-08-31-PREVIEW').tenantId]",
+                       "objectId": "[reference(variables('webAppResourceId'), '2015-08-31-PREVIEW').principalId]",
+                       "permissions": {
+                           "secrets": [
+                               "get",
+                               "list"
+                           ]
+                       }
                     }
                 ],
                 "sku": {

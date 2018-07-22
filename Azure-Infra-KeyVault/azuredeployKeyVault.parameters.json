@@ -3,13 +3,10 @@
   "contentVersion": "1.0.0.0",
     "parameters": {
         "keyVaultName": {
-            "value": "kv-org-d01-myapp"
+            "value": "kv-mm-myrefapp"
         },
-        "webAppName": {
-            "value": "AS-ORG-D01-MyApp-WEB"
-        },
-        "objectId": {
-            "value": "x-x-x-x-x"
+        "adObjectId": {
+            "value": "6ee13546-3b2c-4b30-8f33-05e91e3953e3"
         },
         "location": {
             "value": "northcentralus"

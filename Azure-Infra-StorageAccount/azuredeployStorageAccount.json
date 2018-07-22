@@ -21,6 +21,29 @@
                 "description": "Storage Account type."
             }
         },
+        "accessTier": {
+            "type": "string",
+            "defaultValue": "Hot",
+            "allowedValues": [
+                "Hot",
+                "Cold",
+                "Archive"
+            ],
+            "metadata": {
+                "description": "Name of the Storage Account resource."
+            }
+        },
+        "keySource": {
+            "type": "string",
+            "defaultValue": "Microsoft.Storage",
+            "allowedValues": [
+                "Microsoft.Storage",
+                "Microsoft.Keyvault"
+            ],
+            "metadata": {
+                "description": "Name of the source of the Storage Account keys."
+            }
+        },
         "location": {
             "type": "string",
             "defaultValue": "northcentralus",
@@ -36,12 +59,16 @@
         {
             "apiVersion": "2018-02-01",
             "name": "[parameters('storageAccountName')]",
-            "location": "[variables('location')]",
             "type": "Microsoft.Storage/storageAccounts",
             "sku": {
                 "name": "[parameters('storageAccountType')]"
             },
             "kind": "StorageV2",
+            "location": "[variables('location')]",
+            "tags": {},
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "networkAcls": {
                     "bypass": "AzureServices",
@@ -50,7 +77,7 @@
                     "defaultAction": "Allow"
                 },
                 "supportsHttpsTrafficOnly": true,
-                "accessTier": "Hot",
+                "accessTier": "[parameters('accessTier')]",
                 "encryption": {
                     "services": {
                         "blob": {
@@ -60,7 +87,7 @@
                             "enabled": true
                         }
                     },
-                    "keySource": "Microsoft.Storage"
+                    "keySource": "[parameters('keySource')]"
                 }
             },
             "dependsOn": []

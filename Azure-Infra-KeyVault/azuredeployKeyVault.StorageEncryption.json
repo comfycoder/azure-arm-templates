@@ -5,7 +5,14 @@
         "keyVaultName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the Vault"
+                "description": "Name of the Key Vault."
+            }
+        },
+        "storageAccountMSI": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the associated Storage Account resource MSI."
             }
         },
         "adObjectId": {
@@ -125,7 +132,8 @@
         }
     },
     "variables": {
-        "tenantId": "[subscription().tenantId]"
+        "tenantId": "[subscription().tenantId]",
+        "storageAccountResourceId": "[concat(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountMSI')),'/providers/Microsoft.ManagedIdentity/Identities/default')]"
     },
     "resources": [
         {
@@ -149,6 +157,18 @@
                             "secrets": "[parameters('secretsPermissions')]",
                             "certificates": "[parameters('certificatesPermissions')]",
                             "storage": "[parameters('storagePermissions')]"
+                        }
+                    },
+                    {
+                        "tenantId": "[reference(variables('storageAccountResourceId'), '2015-08-31-PREVIEW').tenantId]",
+                        "objectId": "[reference(variables('storageAccountResourceId'), '2015-08-31-PREVIEW').principalId]",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "wrapKey",
+                                "unwrapKey"
+                            ]
                         }
                     }
                 ],

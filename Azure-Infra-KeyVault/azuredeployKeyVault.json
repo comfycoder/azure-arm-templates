@@ -96,7 +96,7 @@
         },
         "enableSoftDelete": {
             "type": "bool",
-            "defaultValue": true,
+            "defaultValue": false,
             "allowedValues": [
                 true,
                 false
@@ -107,7 +107,7 @@
         },
         "enablePurgeProtection": {
             "type": "bool",
-            "defaultValue": true,
+            "defaultValue": false,
             "allowedValues": [
                 true,
                 false

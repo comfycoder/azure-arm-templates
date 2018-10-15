@@ -70,18 +70,6 @@
                     "properties": {
                         "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
                     }
-                },
-                {
-                    "apiVersion": "2015-08-01",
-                    "name": "Microsoft.ApplicationInsights.AzureWebSites",
-                    "type": "siteextensions",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', parameters('webAppName'))]"
-                    ],
-                    "tags": {
-                        "displayName": "appInsightsExtensions"
-                    },
-                    "properties": {}
                 }
             ]
         }

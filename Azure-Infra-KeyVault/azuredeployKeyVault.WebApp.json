@@ -114,7 +114,7 @@
         },
         "enablePurgeProtection": {
             "type": "bool",
-            "defaultValue": false,
+            "defaultValue": true,
             "allowedValues": [
                 true,
                 false

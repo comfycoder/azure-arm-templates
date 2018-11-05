@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aksClusterName": {
+            "value": "AKS-"
+        },
+        "kubernetesVersion": {
+            "value": "1.11.3"
+        },
+        "dnsPrefix": {
+            "value": "myappnamee"
+        },
+        "agentCount": {
+            "value": 1
+        },
+        "agentVMSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "linuxAdminUsername": {
+            "value": "lsa"
+        },
+        "sshRSAPublicKey": {
+            "value": "ssh-rsa xxxx"
+        },
+        "clientId": {
+            "value": ""
+        },
+        "clientSecret": {
+            "value": ""
+        },
+        "networkPlugin": {
+            "value": "kubenet"
+        },
+        "enableRBAC": {
+            "value": true
+        },
+        "enableHttpApplicationRouting": {
+            "value": true
+        },
+        "location": {
+            "value": "centralus"
+        },
+        "enableOmsAgent": {
+            "value": true
+        },
+        "omsWorkspaceRGName": {
+            "value": "RG-"
+        },
+        "omsWorkspaceName": {
+            "value": "OMS-"
+        },
+        "omsWorkspaceLocation": {
+            "value": "eastus"
+        }
+    }
+}
